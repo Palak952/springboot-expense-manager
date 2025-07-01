@@ -3,7 +3,6 @@ package com.example.usercrud.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,37 +13,33 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_transaction")
-public class Transaction {
+@Table(name = "tbl_account")
+public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transaction_Id")
+    @Column(name = "account_id", nullable = false)
     private Long id;
 
-    @NotNull(message = "Please Enter Amount ")
-    @Positive(message = "Amount must be positive")
-    @Column(name = "amount", nullable = false)
-    private Double amount;
+    @NotBlank(message = "Please enter account name")
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @ManyToOne
-    @NotNull(message = "Category must not be null")
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-    
-    @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account account;
-
-    @NotBlank(message = "Please Enter type (Income/Expense/Transfer)")
+    @NotBlank(message = "Please enter account type")
     @Column(name = "type", nullable = false)
     private String type;
 
-    @Column(name = "note")
-    private String note;
+    @NotNull(message = "Please enter account balance")
+    @Column(name = "balance", nullable = false)
+    private Double balance;
 
-    @Column(updatable = false)
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -56,5 +51,5 @@ public class Transaction {
     public void updateUpdatedAt() {
         this.updatedAt = LocalDateTime.now();
     }
-
 }
+
