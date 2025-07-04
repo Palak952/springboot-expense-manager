@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tbl_transaction")
+@Table(name = "transaction")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +30,7 @@ public class Transaction {
     @NotNull(message = "Category must not be null")
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
-    
+
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
